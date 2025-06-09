@@ -5,9 +5,13 @@ import './index.css'
 
 import { BrowserRouter } from 'react-router-dom';
 
+import { AuthWrapper } from './context/auth.context.jsx';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <AuthWrapper>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </AuthWrapper>
 )
 
