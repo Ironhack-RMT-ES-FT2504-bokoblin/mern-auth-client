@@ -1,6 +1,5 @@
-import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-
+import service from "../services/service.config";
 
 // el componente que comparte los estados del contexto por toda la app
 const AuthContext = createContext()
@@ -11,25 +10,21 @@ function AuthWrapper(props) {
 
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
   const [ loggedUserId, setLoggedUserId ] = useState(null)
+  const [ role, setRole ] = useState(null) //! solo si implementamos roles
+
   const [ isValidatingToken, setIsValidatingToken ] = useState(true)
   //false y null porque asumimos que es un extraño (quizas más adelante lo validemos)
 
   const authenticateUser = async () => {
     // funcion para validar el token del usuario y saber quien es y actualiza los estados
-
-    const authToken = localStorage.getItem("authToken")
-
     try {
       
-      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/auth/verify`, {
-        headers: {
-          authorization: `Bearer ${authToken}`
-        }
-      })
+      const response = await service.get(`/auth/verify`)
 
       // si la llamada llega a este punto significa que el backend valido el token
       setIsLoggedIn(true)
       setLoggedUserId(response.data.payload._id)
+      setRole(response.data.payload.role)
       setIsValidatingToken(false)
 
     } catch (error) {
@@ -38,6 +33,7 @@ function AuthWrapper(props) {
       // si la llamada llega a este punto significa que el token no existe, no es valido o expiró
       setIsLoggedIn(false)
       setLoggedUserId(null)
+      setRole(null)
       setIsValidatingToken(false)
     }
 
@@ -50,7 +46,8 @@ function AuthWrapper(props) {
   const passedContext = {
     isLoggedIn,
     loggedUserId,
-    authenticateUser
+    authenticateUser,
+    role
   }
 
   if (isValidatingToken) {

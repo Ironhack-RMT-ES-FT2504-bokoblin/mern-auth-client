@@ -10,6 +10,8 @@ import PrivatePageExample from "./pages/PrivatePageExample";
 // components
 import Navbar from "./components/Navbar"
 import OnlyPrivate from "./components/OnlyPrivate";
+import AdminPageExample from "./pages/AdminPageExample";
+import OnlyAdmin from "./components/OnlyAdmin";
 
 function App() {
 
@@ -25,6 +27,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/private-page-example" element={ <OnlyPrivate> <PrivatePageExample /> </OnlyPrivate> } />
+        <Route path="/ejemplo-admin-dashboard" element={ <OnlyAdmin> <AdminPageExample /> </OnlyAdmin> } />
+
 
         {/* error FE routes here... */}
 

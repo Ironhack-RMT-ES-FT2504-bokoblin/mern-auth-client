@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
 import { useNavigate } from "react-router-dom";
+import service from "../../services/service.config";
 
 function Login() {
 
@@ -28,7 +28,7 @@ function Login() {
 
     try {
 
-      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/login`, userCredentials)
+      const response = await service.post(`/auth/login`, userCredentials)
       
       console.log("usuario validado por el backend", response)
 
